@@ -1,5 +1,9 @@
 FROM node:alpine
 
+ARG VERSION
+
+ENV VERSION=${VERSION}
+
 WORKDIR /app
 
 COPY package.json .
