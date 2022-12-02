@@ -8,6 +8,7 @@ import { deleteImage } from '../utils/files'
 type MakePDF = (filename: string, length: number) => void
 
 const makePDF: MakePDF = (filename, length) => {
+    console.time('makePDF')
     const doc = new jsPDF('p', 'mm', 'A4')
 
     const pics = new Array(length).fill(null).map((_, i) => i)
@@ -22,6 +23,7 @@ const makePDF: MakePDF = (filename, length) => {
         deleteImage(imagePath)
     })
     doc.save(join(STORAGE_PDF, filename))
+    console.timeEnd('makePDF')
 }
 
 type Base64Encode = (file: string) => string

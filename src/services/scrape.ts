@@ -60,6 +60,7 @@ const init: InitFunction = async (url, headless = true, cookies) => {
 }
 
 const images = async (id: string, link: string, cookie: string) => {
+    console.time('images')
     const domain = link.split(/\//)[2]
     const [name, value] = cookie.split('=')
     const cookies = [
@@ -95,7 +96,7 @@ const images = async (id: string, link: string, cookie: string) => {
     await browser.close()
     const filename = getFilename(link)
     const { length } = elements
-    console.log(length, filename)
+    console.timeEnd('images')
     return { filename, length }
 }
 
