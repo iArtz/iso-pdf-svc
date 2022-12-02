@@ -21,6 +21,7 @@ router.post(
     validateRequest,
     isLocal,
     async (req: Request, res: Response) => {
+        console.time('new')
         const { cookie, link, id } = req.body
         console.log(cookie, link, id)
         const { filename, length } = await images(id, link, cookie)
@@ -30,6 +31,7 @@ router.post(
             deleteImage(filePath)
         }, 10 * 1000)
         res.download(filePath)
+        console.timeEnd('new')
     }
 )
 
