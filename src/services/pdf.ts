@@ -17,7 +17,7 @@ const makePDF: MakePDF = (filename, length) => {
             STORAGE_IMAGES,
             `${filename.split('.')[0]}-${pic}.jpeg`
         )
-        doc.addImage(base64Encode(imagePath), 'JPEG', 0, 0, 210, 305)
+        doc.addImage(base64Encode(imagePath), 'JPEG', 0, 0, 210, 300)
         idx >= 0 && idx !== pics.length - 1 && doc.addPage()
         deleteImage(imagePath)
     })

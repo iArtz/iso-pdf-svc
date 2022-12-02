@@ -49,7 +49,7 @@ const init: InitFunction = async (url, headless = true, cookies) => {
         await page.setViewport({
             width: bodyWidth,
             height: bodyHeight,
-            deviceScaleFactor: 6,
+            deviceScaleFactor: 2,
         })
         return { browser, page }
     } catch (err) {
