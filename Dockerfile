@@ -11,14 +11,7 @@ ENV NODE_ENV=${NODE_ENV}
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
 RUN apk update && \
-  apk add --no-cache \
-  chromium \
-  nss \
-  freetype \
-  freetype-dev \
-  harfbuzz \
-  ca-certificates \
-  ttf-freefont
+  apk add --no-cache chromium 
 
 WORKDIR /app
 

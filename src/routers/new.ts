@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express'
 import { body } from 'express-validator'
 import { validateRequest } from '../middlewares/validate-request'
+import { isLocal } from '../middlewares/is-local-request'
 
 import { images } from '../services/scrape'
 import { makePDF } from '../services/pdf'
@@ -18,6 +19,7 @@ router.post(
         body('id').not().isEmpty().withMessage('id is required'),
     ],
     validateRequest,
+    isLocal,
     async (req: Request, res: Response) => {
         const { cookie, link, id } = req.body
         console.log(cookie, link, id)
