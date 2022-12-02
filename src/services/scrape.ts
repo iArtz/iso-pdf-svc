@@ -42,6 +42,7 @@ const init: InitFunction = async (url, headless = true, cookies) => {
         page.setDefaultNavigationTimeout(0)
         await page.setCookie(...cookies)
         // Configure the navigation timeout
+        await page.setDefaultNavigationTimeout(0)
         await page.goto(url, { waitUntil: 'networkidle0', timeout: 0 })
         // Get scroll height of the rendered page and set viewport
         const bodyHeight = await page.evaluate(() => document.body.scrollHeight)
