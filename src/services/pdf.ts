@@ -3,12 +3,13 @@ import { join } from 'path'
 
 import { jsPDF } from 'jspdf'
 import { STORAGE_IMAGES, STORAGE_PDF } from '../config/constants'
-import { deleteImage } from '../utils/files'
+import { checkDir, deleteImage } from '../utils/files'
 
 type MakePDF = (filename: string, length: number) => void
 
 const makePDF: MakePDF = (filename, length) => {
     console.time('makePDF')
+    checkDir(STORAGE_PDF)
     const doc = new jsPDF('p', 'mm', 'A4')
 
     const pics = new Array(length).fill(null).map((_, i) => i)

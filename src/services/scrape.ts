@@ -72,16 +72,14 @@ const images = async (id: string, link: string, cookie: string) => {
     ]
 
     const { browser, page } = await init(link, true, cookies)
-
-    const dir = STORAGE_IMAGES
-    checkDir(dir)
+    checkDir(STORAGE_IMAGES)
     const elements = await page.$$('page')
 
     for (let i = 0; i < elements.length; i++) {
         try {
             // get screenshot of a particular element
             await elements[i].screenshot({
-                path: join(dir, `${id}-${i}.jpeg`),
+                path: join(STORAGE_IMAGES, `${id}-${i}.jpeg`),
                 quality: 100,
                 type: 'jpeg',
             })
