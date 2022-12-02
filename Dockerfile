@@ -15,10 +15,10 @@ RUN apk update && \
 
 WORKDIR /app
 
-COPY package.json .
+COPY ./build/package.json .
 
 RUN yarn install --prod
 
-COPY . .
+COPY ./build .
 
 CMD yarn start
