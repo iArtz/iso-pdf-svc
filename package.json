@@ -5,11 +5,15 @@
     "license": "MIT",
     "scripts": {
         "lint": "eslint --ext .ts --fix",
-        "start": "ts-node src/index.js",
-        "start:dev": "ts-node-dev src/index.ts",
+        "start": "ts-node src/index.ts",
         "test": "jest --watchAll --no-cache",
-        "dev": "nodemon -r dotenv/config src/index.js dotenv_config_path=.env.local",
-        "prepare": "husky install"
+        "dev": "ts-node-dev --poll src/index.ts",
+        "prepare": "husky install",
+        "major": "jest test && yarn version --major && yarn release",
+        "minor": "jest test && yarn version --minor && yarn release",
+        "patch": "jest test && yarn version --patch && yarn release",
+        "build": "docker build --platform linux/amd64 --build-arg VERSION=$(awk -F'\"' '/\"version\": \".+\"/{ print $4; exit; }' package.json) . -t iartz/jso-pdf-svc",
+        "release": "yarn build && docker push iartz/jso-pdf-svc"
     },
     "dependencies": {
         "@types/cors": "^2.8.12",
