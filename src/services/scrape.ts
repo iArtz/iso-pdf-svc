@@ -1,6 +1,5 @@
 'use strict'
 import { join } from 'path'
-import { URL } from 'node:url'
 import puppeteer, { Browser, Page } from 'puppeteer'
 import { checkDir, getFilename } from '../utils/files'
 import {
