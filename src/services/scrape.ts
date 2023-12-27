@@ -1,4 +1,3 @@
-'use strict'
 import { join } from 'path'
 import puppeteer, { Browser, Page } from 'puppeteer'
 import { checkDir, getFilename } from '../utils/files'
@@ -30,7 +29,6 @@ const init: InitFunction = async (url, headless = true, cookies) => {
         args: [
             '--no-sandbox',
             '--disable-setuid-sandbox',
-            '--disable-gpu',
             '--ignore-certificate-errors',
         ],
     }
@@ -53,7 +51,6 @@ const init: InitFunction = async (url, headless = true, cookies) => {
         })
         return { browser, page }
     } catch (err) {
-        console.error(err)
         throw new Error('initial browser failure')
     }
 }

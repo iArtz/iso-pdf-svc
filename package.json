@@ -3,11 +3,22 @@
     "version": "1.0.0",
     "main": "src/index.js",
     "license": "MIT",
+    "jest": {
+        "preset": "ts-jest",
+        "testEnvironment": "node",
+        "setupFilesAfterEnv": [
+            "./src/test/setup.ts"
+        ],
+        "testPathIgnorePatterns": [
+            "/node_modules/",
+            "/build/"
+        ]
+    },
     "scripts": {
         "clean": "rimraf ./build",
         "build": "yarn clean && tsc",
         "start": "node src/index.js",
-        "test": "jest --watchAll --no-cache",
+        "test": "jest --watchAll --no-cache --detectOpenHandles",
         "test:docker": "docker run --rm --name jso-pdf-svc -p 3000:3000 -e NODE_ENV=development --cpus=\"2\" --memory=\"1.75g\" iartz/jso-pdf-svc",
         "test:docker:arm": "docker run --rm --name jso-pdf-svc -p 3000:3000 -e NODE_ENV=development --cpus=\"2\" --memory=\"1.75g\" iartz/jso-pdf-svc:arm",
         "dev": "ts-node-dev src/index.ts",

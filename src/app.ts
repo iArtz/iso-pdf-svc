@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction } from 'express'
+import express, { NextFunction, Request, Response } from 'express'
 import cors from 'cors'
 import logger from 'morgan'
 import createError, { HttpError } from 'http-errors'
@@ -17,11 +17,11 @@ app.use((req, res, next) => {
 })
 
 app.use((err: HttpError, req: Request, res: Response, next: NextFunction) => {
-    res.status(err.status || 500)
-    res.json({
+    res.status(err.status || 500).json({
         status: err.status,
-        error: req.app.get('env') === 'development' ? err : {},
+        error: req.app.get('env') == 'development' ? err : {},
     })
+    next()
 })
 
 export { app }
