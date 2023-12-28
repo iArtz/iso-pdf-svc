@@ -2,7 +2,7 @@ import { existsSync, mkdirSync, unlinkSync } from 'fs'
 import { URL } from 'node:url'
 
 const checkDir = (dir: string): void => {
-    if (!existsSync(dir)) mkdirSync(dir)
+    !existsSync(dir) && mkdirSync(dir)
 }
 
 const getFilename = (uri: string): string => {
@@ -13,7 +13,7 @@ const getFilename = (uri: string): string => {
 }
 
 const deleteImage = (path: string): void => {
-    unlinkSync(path)
+    existsSync(path) && unlinkSync(path)
 }
 
 export { checkDir, getFilename, deleteImage }

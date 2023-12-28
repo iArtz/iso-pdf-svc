@@ -1,6 +1,4 @@
-'use strict'
 import { join } from 'path'
-import { URL } from 'node:url'
 import puppeteer, { Browser, Page } from 'puppeteer'
 import { checkDir, getFilename } from '../utils/files'
 import {
@@ -23,7 +21,7 @@ type InitFunction = (
     cookies: Cookie[]
 ) => returnBrowser
 
-const init: InitFunction = async (url, headless = true, cookies) => {
+const init: InitFunction = async (url, headless = true, cookies = []) => {
     const initialConfig = {
         headless: headless,
         executablePath: EXECUTEABLE_PATH,
@@ -31,7 +29,6 @@ const init: InitFunction = async (url, headless = true, cookies) => {
         args: [
             '--no-sandbox',
             '--disable-setuid-sandbox',
-            '--disable-gpu',
             '--ignore-certificate-errors',
         ],
     }
@@ -42,6 +39,7 @@ const init: InitFunction = async (url, headless = true, cookies) => {
         page.setDefaultNavigationTimeout(0)
         await page.setCookie(...cookies)
         // Configure the navigation timeout
+        await page.setDefaultNavigationTimeout(0)
         await page.goto(url, { waitUntil: 'networkidle0', timeout: 0 })
         // Get scroll height of the rendered page and set viewport
         const bodyHeight = await page.evaluate(() => document.body.scrollHeight)
@@ -53,12 +51,12 @@ const init: InitFunction = async (url, headless = true, cookies) => {
         })
         return { browser, page }
     } catch (err) {
-        console.error(err)
         throw new Error('initial browser failure')
     }
 }
 
 const images = async (id: string, link: string, cookie: string) => {
+    console.time('images')
     const domain = link.split(/\//)[2]
     const [name, value] = cookie.split('=')
     const cookies = [
@@ -70,16 +68,14 @@ const images = async (id: string, link: string, cookie: string) => {
     ]
 
     const { browser, page } = await init(link, true, cookies)
-
-    const dir = STORAGE_IMAGES
-    checkDir(dir)
+    checkDir(STORAGE_IMAGES)
     const elements = await page.$$('page')
 
     for (let i = 0; i < elements.length; i++) {
         try {
             // get screenshot of a particular element
             await elements[i].screenshot({
-                path: join(dir, `${id}-${i}.jpeg`),
+                path: join(STORAGE_IMAGES, `${id}-${i}.jpeg`),
                 quality: 100,
                 type: 'jpeg',
             })
@@ -94,8 +90,8 @@ const images = async (id: string, link: string, cookie: string) => {
     await browser.close()
     const filename = getFilename(link)
     const { length } = elements
-    console.log(length, filename)
+    console.timeEnd('images')
     return { filename, length }
 }
 
-export { images }
+export { images, init }

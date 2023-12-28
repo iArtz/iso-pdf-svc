@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express'
 import { body } from 'express-validator'
 import { validateRequest } from '../middlewares/validate-request'
+import { isLocal } from '../middlewares/is-local-request'
 
 import { images } from '../services/scrape'
 import { makePDF } from '../services/pdf'
@@ -18,9 +19,10 @@ router.post(
         body('id').not().isEmpty().withMessage('id is required'),
     ],
     validateRequest,
+    isLocal,
     async (req: Request, res: Response) => {
+        console.time('new')
         const { cookie, link, id } = req.body
-        console.log(cookie, link, id)
         const { filename, length } = await images(id, link, cookie)
         makePDF(filename, length)
         const filePath = `${STORAGE_PDF}/${filename}`
@@ -28,6 +30,8 @@ router.post(
             deleteImage(filePath)
         }, 10 * 1000)
         res.download(filePath)
+        console.table({ cookie, link, id })
+        console.timeEnd('new')
     }
 )
 

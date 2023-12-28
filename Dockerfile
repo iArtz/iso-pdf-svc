@@ -8,24 +8,33 @@ ENV VERSION=${VERSION}
 
 ENV NODE_ENV=${NODE_ENV}
 
+# Set environment variables
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 
-RUN apk update && \
-  apk add --no-cache \
+# Install common font
+RUN apk add --no-cache \
   chromium \
   nss \
   freetype \
-  freetype-dev \
   harfbuzz \
   ca-certificates \
-  ttf-freefont
+  ttf-liberation \
+  ttf-droid \
+  font-noto-thai
+
+# Install Sarabun font
+RUN mkdir -p /usr/share/fonts/Sarabun \
+  && wget -q -O /usr/share/fonts/Sarabun/Sarabun-Regular.ttf "https://github.com/google/fonts/raw/main/ofl/sarabun/Sarabun-Regular.ttf" \
+  && wget -q -O /usr/share/fonts/Sarabun/Sarabun-Bold.ttf "https://github.com/google/fonts/raw/main/ofl/sarabun/Sarabun-Bold.ttf" \
+  && fc-cache -f
 
 WORKDIR /app
 
-COPY package.json .
+COPY ./build/package.json .
 
-RUN yarn install
+RUN yarn install --prod
 
-COPY . .
+COPY ./build .
 
 CMD yarn start
