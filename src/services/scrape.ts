@@ -21,7 +21,7 @@ type InitFunction = (
     cookies: Cookie[]
 ) => returnBrowser
 
-const init: InitFunction = async (url, headless = true, cookies) => {
+const init: InitFunction = async (url, headless = true, cookies = []) => {
     const initialConfig = {
         headless: headless,
         executablePath: EXECUTEABLE_PATH,
@@ -94,4 +94,4 @@ const images = async (id: string, link: string, cookie: string) => {
     return { filename, length }
 }
 
-export { images }
+export { images, init }

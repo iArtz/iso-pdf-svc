@@ -13,17 +13,12 @@ describe('Files Test', () => {
                 throw err
             }
             expect(err).toBeFalsy()
+            rmdir(testDir, (err) => {
+                if (err) {
+                    throw err
+                }
+            })
         })
-
-        setTimeout(
-            () =>
-                rmdir(testDir, (err) => {
-                    if (err) {
-                        throw err
-                    }
-                }),
-            1000
-        )
     })
 
     it('Get filename from uri', () => {

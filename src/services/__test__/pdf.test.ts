@@ -8,9 +8,9 @@ describe('PDF Test', () => {
         // Create images for test make PDF
         // @ts-expect-error: any type
         const { cookie, link, id } = global.payload
-        const { filename } = await images(id, link, cookie)
+        const { filename, length } = await images(id, link, cookie)
 
-        makePDF(filename, 9)
+        makePDF(filename, length)
         // @ts-expect-error: any type
         access(join(global.STORAGE, 'pdf', filename), (err) => {
             expect(err).toBeNull()
