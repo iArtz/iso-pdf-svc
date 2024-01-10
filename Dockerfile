@@ -18,11 +18,7 @@ RUN apk add --no-cache \
   nss \
   freetype \
   harfbuzz \
-  ca-certificates \
-  ttf-liberation \
-  ttf-droid \
-  font-liberation \
-  font-noto-thai
+  ca-certificates
 
 # Install Sarabun font
 RUN mkdir -p /usr/share/fonts/Sarabun \
