@@ -21,6 +21,7 @@ RUN apk add --no-cache \
   ca-certificates \
   ttf-liberation \
   ttf-droid \
+  font-liberation \
   font-noto-thai
 
 # Install Sarabun font
