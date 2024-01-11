@@ -17,11 +17,11 @@ type returnBrowser = Promise<{ browser: Browser; page: Page }>
 
 type InitFunction = (
     url: string,
-    headless: boolean,
+    headless: boolean | 'new',
     cookies: Cookie[]
 ) => returnBrowser
 
-const init: InitFunction = async (url, headless = true, cookies = []) => {
+const init: InitFunction = async (url, headless = 'new', cookies = []) => {
     const initialConfig = {
         headless: headless,
         executablePath: EXECUTEABLE_PATH,
