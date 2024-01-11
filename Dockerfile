@@ -16,6 +16,7 @@ ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 
 # Install common font
 RUN apk add --no-cache \
+  tzdata \
   chromium \
   nss \
   freetype \
