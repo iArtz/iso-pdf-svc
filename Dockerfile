@@ -8,6 +8,8 @@ ENV VERSION=${VERSION}
 
 ENV NODE_ENV=${NODE_ENV}
 
+ENV TZ=Asia/Bangkok
+
 # Set environment variables
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
